@@ -1,0 +1,13 @@
+match_id,team_side,player,minute,result,x,y,xg,situation,shot_type,player_assisted
+19993,home,Erling Haaland,23,Goal,0.87,0.51,0.45,OpenPlay,RightFoot,Kevin De Bruyne
+19993,home,Erling Haaland,67,Goal,0.89,0.49,0.52,OpenPlay,RightFoot,Phil Foden
+19993,home,Phil Foden,34,SavedShot,0.78,0.45,0.18,OpenPlay,LeftFoot,
+19993,home,Kevin De Bruyne,55,MissedShots,0.65,0.38,0.09,OpenPlay,RightFoot,
+19993,away,Nicolas Jackson,42,SavedShot,0.74,0.47,0.14,OpenPlay,RightFoot,
+19993,away,Noni Madueke,71,BlockedShot,0.62,0.35,0.07,OpenPlay,LeftFoot,
+19993,away,Cole Palmer,88,SavedShot,0.71,0.42,0.11,OpenPlay,RightFoot,
+19994,home,Bukayo Saka,15,SavedShot,0.81,0.44,0.22,OpenPlay,RightFoot,
+19994,home,Leandro Trossard,44,Goal,0.85,0.50,0.38,OpenPlay,LeftFoot,Bukayo Saka
+19994,home,Gabriel Martinelli,60,MissedShots,0.68,0.52,0.10,OpenPlay,LeftFoot,
+19994,away,Bryan Mbeumo,38,Goal,0.83,0.48,0.31,OpenPlay,RightFoot,
+19994,away,Ivan Toney,72,SavedShot,0.79,0.46,0.19,OpenPlay,RightFoot,

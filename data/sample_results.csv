@@ -1,0 +1,11 @@
+match_id,date,home_team,away_team,home_goals,away_goals,home_xg,away_xg,forecast_w,forecast_d,forecast_l,result
+19993,2025-08-16,Manchester City,Chelsea,2,0,2.34,0.87,0.52,0.24,0.24,H
+19994,2025-08-16,Arsenal,Brentford,1,1,1.76,0.94,0.61,0.22,0.17,D
+19995,2025-08-16,Liverpool,Ipswich Town,2,0,2.11,0.45,0.67,0.20,0.13,H
+19996,2025-08-17,Fulham,Tottenham,1,1,0.98,1.43,0.28,0.27,0.45,D
+19997,2025-08-17,Newcastle United,Southampton,3,1,2.67,0.88,0.58,0.25,0.17,H
+19998,2025-08-17,Wolverhampton Wanderers,Nottingham Forest,0,1,0.76,0.92,0.38,0.31,0.31,A
+19999,2025-08-18,Aston Villa,West Ham United,2,1,1.89,1.21,0.50,0.26,0.24,H
+20000,2025-08-18,Everton,Brighton,0,3,0.64,2.43,0.29,0.28,0.43,A
+20001,2025-08-18,Leicester City,Bournemouth,1,2,1.12,1.76,0.36,0.28,0.36,A
+20002,2025-08-19,Manchester United,Fulham,0,1,0.87,1.12,0.43,0.29,0.28,A
