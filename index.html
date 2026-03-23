@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudEdge Consulting | Data-Driven Decisions at Scale</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #1a1a2e;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* ── Colour Tokens ── */
+    :root {
+      --brand:   #0a2463;
+      --accent:  #3e92cc;
+      --light:   #e8f4fd;
+      --mid:     #f4f8ff;
+      --dark:    #0d1b3e;
+      --text:    #2d3748;
+      --muted:   #718096;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 6%;
+      background: rgba(10, 36, 99, 0.97);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 20px rgba(0,0,0,.3);
+    }
+    .logo { color: #fff; font-size: 1.4rem; font-weight: 700; letter-spacing: .5px; }
+    .logo span { color: var(--accent); }
+    .nav-links { list-style: none; display: flex; gap: 2rem; }
+    .nav-links a { color: rgba(255,255,255,.85); text-decoration: none; font-size: .95rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent); color: #fff;
+      padding: .55rem 1.3rem; border-radius: 6px; font-weight: 600;
+      text-decoration: none; transition: background .2s;
+    }
+    .nav-cta:hover { background: #2a7ab5; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 6% 5rem;
+      background: linear-gradient(135deg, var(--dark) 0%, #1a3a6e 60%, #0d4b8e 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(62,146,204,.25); border: 1px solid rgba(62,146,204,.5);
+      color: #8ecff5; font-size: .8rem; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: .4rem 1rem; border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800; color: #fff; line-height: 1.15;
+      margin-bottom: 1.3rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: 1.15rem; color: rgba(255,255,255,.75);
+      max-width: 580px; margin: 0 auto 2.5rem;
+    }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      padding: .85rem 2rem; border-radius: 8px; font-weight: 700;
+      text-decoration: none; font-size: 1rem; transition: transform .2s, background .2s;
+      box-shadow: 0 4px 20px rgba(62,146,204,.4);
+    }
+    .btn-primary:hover { background: #2a7ab5; transform: translateY(-2px); }
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,.4); color: #fff;
+      padding: .85rem 2rem; border-radius: 8px; font-weight: 600;
+      text-decoration: none; font-size: 1rem; transition: border-color .2s, transform .2s;
+    }
+    .btn-outline:hover { border-color: #fff; transform: translateY(-2px); }
+    .hero-stats {
+      display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 4rem; padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 2.2rem; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: .85rem; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ── Section Shared ── */
+    section { padding: 6rem 6%; }
+    .section-tag {
+      display: inline-block; color: var(--accent); font-size: .8rem;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: .6rem;
+    }
+    .section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; color: var(--brand); margin-bottom: 1rem; }
+    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 560px; margin-bottom: 3.5rem; }
+
+    /* ── Services ── */
+    #services { background: var(--mid); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.8rem;
+    }
+    .service-card {
+      background: #fff; border-radius: 14px;
+      padding: 2rem 1.8rem;
+      border: 1px solid #e2e8f0;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.1); }
+    .service-icon {
+      width: 54px; height: 54px; border-radius: 12px;
+      background: var(--light); display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 1.2rem;
+    }
+    .service-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--brand); margin-bottom: .6rem; }
+    .service-card p { color: var(--muted); font-size: .93rem; }
+
+    /* ── How It Works ── */
+    #process { background: #fff; }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem; counter-reset: steps;
+    }
+    .step { position: relative; padding: 1.8rem; border-radius: 14px; background: var(--mid); }
+    .step::before {
+      counter-increment: steps;
+      content: counter(steps, decimal-leading-zero);
+      position: absolute; top: -1rem; left: 1.4rem;
+      font-size: 3rem; font-weight: 900; color: var(--accent);
+      opacity: .15; line-height: 1;
+    }
+    .step h3 { font-size: 1.05rem; font-weight: 700; color: var(--brand); margin-bottom: .5rem; }
+    .step p { color: var(--muted); font-size: .9rem; }
+
+    /* ── Tech Stack ── */
+    #tech { background: var(--brand); }
+    #tech .section-title { color: #fff; }
+    #tech .section-sub { color: rgba(255,255,255,.65); }
+    .tech-grid {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+    }
+    .tech-pill {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      color: #fff; padding: .55rem 1.2rem; border-radius: 30px;
+      font-size: .9rem; font-weight: 500; transition: background .2s;
+    }
+    .tech-pill:hover { background: rgba(62,146,204,.35); }
+
+    /* ── Why Us ── */
+    #why { background: var(--mid); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.6rem;
+    }
+    .why-card {
+      background: #fff; border-radius: 12px; padding: 1.6rem;
+      border-left: 4px solid var(--accent);
+    }
+    .why-card h4 { font-size: 1rem; font-weight: 700; color: var(--brand); margin-bottom: .4rem; }
+    .why-card p { color: var(--muted); font-size: .9rem; }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      background: linear-gradient(120deg, var(--brand), #1a4f9e);
+      padding: 5rem 6%; text-align: center;
+    }
+    .cta-banner h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 800; color: #fff; margin-bottom: 1rem; }
+    .cta-banner p { color: rgba(255,255,255,.75); font-size: 1.05rem; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+    /* ── Contact ── */
+    #contact { background: #fff; }
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .contact-info h3 { font-size: 1.3rem; font-weight: 700; color: var(--brand); margin-bottom: 1rem; }
+    .contact-info p { color: var(--muted); margin-bottom: 1.5rem; }
+    .contact-detail { display: flex; align-items: center; gap: .8rem; margin-bottom: .9rem; color: var(--text); }
+    .contact-detail span:first-child { font-size: 1.2rem; }
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    form input, form textarea, form select {
+      padding: .8rem 1rem; border: 1.5px solid #e2e8f0; border-radius: 8px;
+      font-size: .95rem; font-family: inherit; color: var(--text);
+      transition: border-color .2s;
+    }
+    form input:focus, form textarea:focus, form select:focus {
+      outline: none; border-color: var(--accent);
+    }
+    form textarea { min-height: 120px; resize: vertical; }
+    form button {
+      background: var(--accent); color: #fff; border: none;
+      padding: .9rem; border-radius: 8px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background .2s, transform .2s;
+    }
+    form button:hover { background: #2a7ab5; transform: translateY(-1px); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--dark); color: rgba(255,255,255,.6);
+      padding: 2rem 6%; display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 1rem;
+      font-size: .88rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .contact-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-stats { gap: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="logo">Cloud<span>Edge</span> Consulting</div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#tech">Technology</a></li>
+      <li><a href="#why">Why Us</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get in Touch</a>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Data &amp; Cloud Consulting</div>
+      <h1>Turn Your Data Into<br /><span>Competitive Advantage</span></h1>
+      <p>We help organisations harness cloud compute technologies to transform raw data into real-time insights, smarter decisions, and measurable growth.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn-primary">Start Your Journey</a>
+        <a href="#services" class="btn-outline">Explore Services</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Clients Served</div></div>
+        <div class="stat"><div class="stat-num">3×</div><div class="stat-label">Average ROI</div></div>
+        <div class="stat"><div class="stat-num">99.9%</div><div class="stat-label">Uptime SLA</div></div>
+        <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Years Experience</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Services ── -->
+  <section id="services">
+    <div class="section-tag">What We Do</div>
+    <h2 class="section-title">End-to-End Data &amp; Cloud Services</h2>
+    <p class="section-sub">From raw ingestion to boardroom dashboards — we cover the full data lifecycle on your preferred cloud.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">☁️</div>
+        <h3>Cloud Data Architecture</h3>
+        <p>Design and build scalable, cost-optimised data platforms on AWS, Azure, or GCP tailored to your workloads and growth trajectory.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔄</div>
+        <h3>Data Pipeline Engineering</h3>
+        <p>Automated ETL/ELT pipelines that move, transform, and validate data in real-time or batch — reliably and at scale.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Business Intelligence &amp; Dashboards</h3>
+        <p>Interactive, self-serve dashboards in Power BI, Looker, or Tableau that give decision-makers instant clarity on KPIs.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <h3>Machine Learning &amp; AI</h3>
+        <p>Predictive models and AI-powered automation embedded directly into your workflows to surface insights before competitors do.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔒</div>
+        <h3>Data Governance &amp; Security</h3>
+        <p>Policies, lineage tracking, and role-based access controls that keep your data compliant, trustworthy, and audit-ready.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📈</div>
+        <h3>Analytics Strategy</h3>
+        <p>Roadmap consulting to align your data investments with business objectives and build internal data literacy across teams.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Process ── -->
+  <section id="process">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-title">Our Proven Delivery Process</h2>
+    <p class="section-sub">A structured, iterative approach that reduces risk and delivers value fast.</p>
+    <div class="process-steps">
+      <div class="step">
+        <h3>Discovery &amp; Audit</h3>
+        <p>We assess your current data estate, tech stack, and business goals to identify gaps and prioritise high-impact opportunities.</p>
+      </div>
+      <div class="step">
+        <h3>Architecture Design</h3>
+        <p>Our engineers craft a cloud-native blueprint — selecting the right services, storage patterns, and compute models for your needs.</p>
+      </div>
+      <div class="step">
+        <h3>Agile Build</h3>
+        <p>Rapid two-week sprints with working deliverables at every cycle, keeping your team informed and in control throughout.</p>
+      </div>
+      <div class="step">
+        <h3>Deploy &amp; Optimise</h3>
+        <p>Production rollout with CI/CD pipelines, monitoring, and cost-optimisation — followed by knowledge transfer to your team.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tech Stack ── -->
+  <section id="tech">
+    <div class="section-tag">Technology</div>
+    <h2 class="section-title">Built on Industry-Leading Platforms</h2>
+    <p class="section-sub">We are cloud-agnostic and work with the tools that best fit your organisation.</p>
+    <div class="tech-grid">
+      <span class="tech-pill">AWS</span>
+      <span class="tech-pill">Microsoft Azure</span>
+      <span class="tech-pill">Google Cloud Platform</span>
+      <span class="tech-pill">Snowflake</span>
+      <span class="tech-pill">Databricks</span>
+      <span class="tech-pill">Apache Spark</span>
+      <span class="tech-pill">dbt</span>
+      <span class="tech-pill">Airflow</span>
+      <span class="tech-pill">Kafka</span>
+      <span class="tech-pill">Terraform</span>
+      <span class="tech-pill">Power BI</span>
+      <span class="tech-pill">Looker</span>
+      <span class="tech-pill">Tableau</span>
+      <span class="tech-pill">Python</span>
+      <span class="tech-pill">Spark SQL</span>
+      <span class="tech-pill">Delta Lake</span>
+      <span class="tech-pill">Kubernetes</span>
+      <span class="tech-pill">Docker</span>
+    </div>
+  </section>
+
+  <!-- ── Why Us ── -->
+  <section id="why">
+    <div class="section-tag">Why CloudEdge</div>
+    <h2 class="section-title">What Sets Us Apart</h2>
+    <p class="section-sub">We don't just deliver technology — we deliver outcomes.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <h4>Outcome-Focused Engagements</h4>
+        <p>Every project is scoped around measurable business results — cost savings, revenue uplift, or decision speed — not just technical deliverables.</p>
+      </div>
+      <div class="why-card">
+        <h4>Senior-Led Teams</h4>
+        <p>No bait-and-switch. Your project is led and delivered by experienced senior engineers and architects, not juniors.</p>
+      </div>
+      <div class="why-card">
+        <h4>Cloud-Agnostic Expertise</h4>
+        <p>We work across AWS, Azure, and GCP — recommending the best fit rather than locking you into a single vendor.</p>
+      </div>
+      <div class="why-card">
+        <h4>Embedded Knowledge Transfer</h4>
+        <p>We build your internal capabilities alongside the solution so your team is self-sufficient when the engagement ends.</p>
+      </div>
+      <div class="why-card">
+        <h4>Transparent Pricing</h4>
+        <p>Fixed-scope proposals with no hidden fees. You know exactly what you're getting and what it costs before we start.</p>
+      </div>
+      <div class="why-card">
+        <h4>Ongoing Partnership</h4>
+        <p>Post-delivery support, SLA-backed maintenance, and a dedicated contact who knows your platform inside out.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA Banner ── -->
+  <div class="cta-banner">
+    <h2>Ready to Unlock the Value in Your Data?</h2>
+    <p>Book a free 45-minute discovery call. No sales pitch — just an honest conversation about your data challenges.</p>
+    <a href="#contact" class="btn-primary">Book a Free Discovery Call</a>
+  </div>
+
+  <!-- ── Contact ── -->
+  <section id="contact">
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <div class="section-tag">Contact Us</div>
+        <h3>Let's Talk About Your Data</h3>
+        <p>Tell us about your challenges and goals. We'll follow up within one business day to arrange a call at your convenience.</p>
+        <div class="contact-detail"><span>📧</span><span>hello@cloudedgeconsulting.io</span></div>
+        <div class="contact-detail"><span>📞</span><span>+44 (0)20 1234 5678</span></div>
+        <div class="contact-detail"><span>📍</span><span>London, UK &mdash; serving clients globally</span></div>
+      </div>
+      <form>
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Work Email" required />
+        <input type="text" placeholder="Company Name" />
+        <select>
+          <option value="" disabled selected>Area of Interest</option>
+          <option>Cloud Data Architecture</option>
+          <option>Data Pipeline Engineering</option>
+          <option>Business Intelligence &amp; Dashboards</option>
+          <option>Machine Learning &amp; AI</option>
+          <option>Data Governance &amp; Security</option>
+          <option>Analytics Strategy</option>
+          <option>Other</option>
+        </select>
+        <textarea placeholder="Briefly describe your data challenge or project..."></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <span>&copy; 2026 CloudEdge Consulting Ltd. All rights reserved.</span>
+    <span>Built with purpose &mdash; <a href="#services">Data that decides.</a></span>
+  </footer>
+
+</body>
+</html>
